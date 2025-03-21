@@ -1,0 +1,8 @@
+streamlit
+pymongo
+gridfs
+redis
+bcrypt
+pyjwt
+# Please doenlaod the following packages mannualy that u will not get any error 
+# pip install -r requirements.txt (avoid this)
