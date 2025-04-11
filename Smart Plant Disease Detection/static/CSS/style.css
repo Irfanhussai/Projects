@@ -1,0 +1,265 @@
+
+
+/* Main Sstyling */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    
+}
+
+/* header {
+    background-color: #333;
+    color: white;
+    padding: 1em 0;
+    text-align: center;
+}
+ */
+  .up_navbar{
+    background-color: #272a3b;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1;
+    color: #ffffff;
+  }
+  .up_navbar h3 {
+    margin: 0;
+    flex: 1;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+  }
+  .up_navbar img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+  }
+
+  /* Sidebar Styling */
+  .sidebar {
+    width: 250px;
+    background-color: #232539;
+    color: #dfe1e6;
+    padding-top: 20px;
+    position: fixed;
+    top: 70px;
+    left: 0;
+    height: calc(100vh - 70px);
+    overflow-y: auto;
+  }
+  .sidebar h1 {
+    font-size: 22px;
+    text-align: center;
+    color: #ffcc00;
+    margin-bottom: 20px;
+  }
+  .sidebar a {
+    color: #dfe1e6;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    text-decoration: none;
+  }
+  .sidebar a:hover, .sidebar a.active {
+    background-color: #3b3f58;
+    border-left: 8px solid #ffcc00;
+    color: #ffffff;
+  }
+  .sidebar a i {
+    margin-right: 15px;
+  }
+/* End of side bar */
+
+/* Footer start */
+footer {
+    background-color: #272a3b;
+    color: white;
+    text-align: center;
+    padding: 1em 0;
+    margin-top: 1em;
+}
+/* footer end */
+
+/* main container */
+
+.content {
+    margin-left: 270px;
+    padding: 20px;
+  }
+
+ 
+/* mainend */
+
+/* Ai engine file */
+
+.text-justify {
+    text-align: justify;
+}
+.main-container{
+  margin-top:50px;  
+}
+.container-fluid{
+  background-color: #7898ba;
+  margin-bottom: -18px;
+}
+
+/* b{
+  color: red;
+} */
+.custom-file-container {
+    text-align: center;
+    border: 2px dashed #ced4da;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 400px;
+    width: 100%;
+    background-color: #ffffff;
+}
+.custom-file label {
+    cursor: pointer;
+    display: inline-block;
+    padding: 10px 20px;
+    border: 1px solid #007bff;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: rgb(235, 182, 85);
+    margin-bottom: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.custom-file label:hover {
+    background-color: rgb(42, 199, 112);
+}
+#file-chosen {
+    display: block;
+    margin-top: 10px;
+    color: rgb(33, 161, 33);
+}
+.btn-submit {
+    background-color: #28a745;
+    color: white;
+    margin-top: 20px;
+}
+.btn-submit:hover {
+    background-color: #218838;
+}
+
+/* .sidebar {
+    width: 200px;
+    background-color: #045403;
+    color: white;
+    padding-top: 20px;
+    height: 100%;
+    position: fixed;
+} */
+
+
+
+/* Specific page styles */
+.display-4 {
+    padding-top: 2%;
+    font-weight: 400;
+    color: rgb(54, 27, 4);
+}
+
+.lead {
+    font-weight: 500;
+    color: black;
+}
+
+.p-5 {
+    padding: 3rem !important;
+}
+
+.shadow {
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.rounded-lg {
+    border-radius: 0.5rem !important;
+}
+
+.d-block {
+    display: block;
+}
+
+.mx-auto {
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.mb-4 {
+    margin-bottom: 1.5rem !important;
+}
+
+.text-center {
+    text-align: center !important;
+}
+
+.text-muted {
+    color: #6c757d !important;
+}
+
+.btn-outline-success {
+    color: #28a745;
+    border-color: #28a745;
+}
+
+.btn-outline-success:hover {
+    background-color: #28a745;
+    color: white;
+}
+
+/* Custom file input */
+.custom-file {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.custom-file input[type="file"] {
+    display: none;
+}
+
+.custom-file label {
+    display: inline-block;
+    width: 100%;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
+
+.custom-file span {
+    margin-left: 10px;
+    font-style: italic;
+}
+
+/* Responsive spacing */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+.col {
+    flex: 1;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.bg-white {
+    background-color: white !important;
+}
+/* AI end */
+
+/* Main end */
