@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block pagetitle %}
+Register
+{% endblock pagetitle %}
+
+{% block body %}
+<style>
+  body {
+    overflow-x: hidden;
+    background-color: #f8f9fa;
+  }
+  .register-container {
+    max-width: 400px;
+    margin: auto;
+    margin-top: 100px;
+    margin-bottom: 250px;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  .register-btn {
+    width: 100%;
+  }
+</style>
+
+<div class="container">
+  <div class="register-container">
+    <h2 class="text-center" style="font-weight: 400; color: #045403;">Register</h2>
+    <form method="POST" action="/register">
+      <div class="form-group mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" required>
+      </div>
+   
+      <div class="form-group mb-4">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="Enter your Email" required>
+      </div>
+
+      <div class="form-group mb-4">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
+      </div>
+     
+      <button type="submit" class="btn btn-success register-btn"><b>Register</b></button>
+    </form>
+    <p class="text-center mt-3">
+      Already have an account? <a href="{{ url_for('login_page') }}">Log in here</a>
+    </p>
+  </div>
+</div>
+
+
+{% endblock body %}

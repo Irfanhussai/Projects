@@ -1,0 +1,387 @@
+{% extends "Dashboard_base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<style>
+
+  /* Main Content Styling */
+  .content {
+    margin-left: 270px;
+    padding: 20px;
+  }
+
+  /* Sensor Section (Gauges) */
+  .sensor-section {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 30px;
+
+  }
+  .gauge-container {
+    margin-top:100px;
+    display:flex;
+    justify-content:center;
+    align-items: center;
+    background-color: #1e2234;
+    border-radius: 50px;
+    padding: 10px;
+    color: white;
+    text-align: center;
+    width: 30%;
+  }
+
+  .gauge-container h4 {
+    font-size: 20px;
+    color: #ffcc00;
+    margin-bottom: 10px;
+  
+  }
+  .gauge-container canvas {
+    width: 50%;
+    max-width: 400px;
+    height: 200px;  /* gauge display function */
+  }
+  .gauge-container p {
+    font-size: 24px;
+    margin-top: 50px;
+  }
+
+  /* Chart Section */
+   .chart-container {
+    background-color: #1e2234;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    color: white;
+    display: flex; /* Enables side-by-side layout */
+    gap: 50px; /* Space between the charts */
+    justify-content: space-around; /* Centers the items within the container */
+}
+
+.chart-item {
+    flex: 1; /* Allows each chart item to take equal space */
+    text-align: center;
+     /* Centers the chart title and canvas horizontally */
+}
+
+.chart-item h3 {
+    font-size: 20px;
+    color: #ffcc00;
+    margin-bottom: 15px;
+}
+
+.chart-item canvas {
+    width: 10%; /* Adjusts the canvas to fit the div */
+    max-width: 500px;
+    height: 300px; /* Adjust this as needed */
+}
+
+
+  /* Pump Control Button */
+  .pump-control {
+    text-align: center;
+    margin-top: 30px;
+  }
+  .pump-control button {
+    padding: 10px 30px;
+    font-size: 16px;
+    background-color: #ff6347;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #ffffff;
+    transition: background-color 0.3s;
+  }
+  .pump-control button:hover {
+    background-color: #28a745;
+  }
+  .pump-control button.on {
+    background-color: #e5533d;
+  }
+  .alert-box {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background-color: #e74c3c;
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    display: none;
+    z-index: 1000;
+  }
+
+  .alert-box button {
+    background-color: #f39c12;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 14px;
+  }
+
+  .alert-box button:hover {
+    background-color: #e67e22;
+  }
+
+</style>
+
+
+
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyCTOqFOHlRRQl9ADSonsmJAsvD7D_Af75s",
+    authDomain: "finalproject-c520c.firebaseapp.com",
+    databaseURL: "https://finalproject-c520c-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "finalproject-c520c",
+    storageBucket: "finalproject-c520c.appspot.com",
+    messagingSenderId: "259810285652",
+    appId: "1:259810285652:web:c94266d04d3352063d75c1"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+</script>
+
+<!--  -->
+<div class="container-fluid">
+  <div class="content">
+    <div class="sensor-section">
+      <div class="gauge-container">
+        <div class="gauge">
+          <h4>Temperature</h4>
+          <canvas id="temperatureGauge"></canvas>
+          <p id="temperatureValue">--°C</p>
+        </div>
+      </div>
+      <div class="gauge-container">
+        <div class="gauge">
+          <h4>Humidity</h4>
+          <canvas id="humidityGauge"></canvas>
+          <p id="humidityValue">--%</p>
+        </div>
+      </div>
+      <div class="gauge-container">
+        <div class="gauge">
+          <h4>Soil Moisture</h4>
+          <canvas id="moistureGauge"></canvas>
+          <p id="moistureValue">--%</p>
+        </div>
+      </div>
+    </div>
+    
+    <h3>Historical Charts</h3>
+    <div class="chart-container">
+      <div class="chart-item">
+        <h3>Temperature</h3>
+        <canvas id="temperatureChart"></canvas>
+      </div>
+      <div class="chart-item">
+        <h3>Humidity</h3>
+        <canvas id="humidityChart"></canvas>
+      </div>
+      <div class="chart-item">
+        <h3>Moisture</h3>
+        <canvas id="moistureChart"></canvas>
+      </div>
+    </div>
+    <div class="pump-control">
+      <button id="pumpButton" onclick="togglePump()">Turn Pump On</button>
+    </div>
+  </div>
+</div>
+        <!-- Soil Moisture Alert Box -->
+        <div id="moistureAlert" class="alert-box" style="display:none;">
+          <span id="moistureMessage">Soil moisture is critically low! Please turn on the pump.</span>
+          <button id="closeAlert" onclick="closeAlert()">Close</button>
+        </div>
+    
+      </div>
+    </div>
+    
+    <!--  -->
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      const database = firebase.database();
+      const temperatureRef = database.ref('DHT/temperature');
+      const humidityRef = database.ref('DHT/humidity');
+      const moistureRef = database.ref('DHT/moisture');
+      const pumpRef = database.ref('PumpStatus');
+    
+      // Create Gauges
+      function createGauge(ctx, max) {
+        return new Chart(ctx, {
+          type: 'doughnut',
+          data: { datasets: [{ data: [0, max], backgroundColor: ['#f39c12', '#2f3640'], borderWidth: 0 }] },
+          options: { cutoutPercentage: 80, rotation: -90, circumference: 180 }
+        });
+      }
+    
+      const tempGauge = createGauge(document.getElementById('temperatureGauge').getContext('2d'), 50);
+      const humidityGauge = createGauge(document.getElementById('humidityGauge').getContext('2d'), 100);
+      const moistureGauge = createGauge(document.getElementById('moistureGauge').getContext('2d'), 100);
+    
+      temperatureRef.on('value', snapshot => {
+        const temp = snapshot.val() || 0;
+        document.getElementById('temperatureValue').innerText = `${temp}°C`;
+        tempGauge.data.datasets[0].data[0] = temp;
+        tempGauge.update();
+      });
+    
+      humidityRef.on('value', snapshot => {
+        const humidity = snapshot.val() || 0;
+        document.getElementById('humidityValue').innerText = `${humidity}%`;
+        humidityGauge.data.datasets[0].data[0] = humidity;
+        humidityGauge.update();
+      });
+    
+      moistureRef.on('value', snapshot => {
+        const moisture = snapshot.val() || 0;
+        document.getElementById('moistureValue').innerText = `${moisture}%`;
+        moistureGauge.data.datasets[0].data[0] = moisture;
+        moistureGauge.update();
+    
+        // Show the moisture alert if moisture is critically low
+        if (moisture < 20) {
+          document.getElementById('moistureAlert').style.display = 'block';
+        }
+      });
+    
+      // Chart.js configurations
+      window.onload = function () {
+        const temperatureChartCtx = document.getElementById('temperatureChart').getContext('2d');
+        const humidityChartCtx = document.getElementById('humidityChart').getContext('2d');
+        const moistureChartCtx = document.getElementById('moistureChart').getContext('2d');
+    
+        const temperatureChart = new Chart(temperatureChartCtx, {
+          type: 'line',
+          data: {
+            labels: [],
+            datasets: [{
+              label: 'Temperature (°C)',
+              data: [],
+              backgroundColor: 'rgba(243, 156, 18, 0.2)',
+              borderColor: '#f39c12',
+              borderWidth: 1
+            }]
+          },
+          options: {
+            responsive: true,
+            scales: { x: { display: true }, y: { beginAtZero: true } }
+          }
+        });
+    
+        const humidityChart = new Chart(humidityChartCtx, {
+          type: 'line',
+          data: {
+            labels: [],
+            datasets: [{
+              label: 'Humidity (%)',
+              data: [],
+              backgroundColor: 'rgba(52, 152, 219, 0.2)',
+              borderColor: '#3498db',
+              borderWidth: 1
+            }]
+          },
+          options: {
+            responsive: true,
+            scales: { x: { display: true }, y: { beginAtZero: true } }
+          }
+        });
+    
+        const moistureChart = new Chart(moistureChartCtx, {
+          type: 'line',
+          data: {
+            labels: [],
+            datasets: [{
+              label: 'Soil Moisture (%)',
+              data: [],
+              backgroundColor: 'rgba(39, 174, 96, 0.2)',
+              borderColor: '#27ae60',
+              borderWidth: 1
+            }]
+          },
+          options: {
+            responsive: true,
+            scales: { x: { display: true }, y: { beginAtZero: true } }
+          }
+        });
+    
+        function updateChart(chart, label, dataPoint) {
+          console.log("Adding data to chart:", label, dataPoint); // Debugging line
+          chart.data.labels.push(label); // Add timestamp
+          chart.data.datasets[0].data.push(dataPoint); // Add new data point
+    
+          // If there are more than 10 data points, remove the oldest
+          if (chart.data.labels.length > 10) {
+            chart.data.labels.shift();
+            chart.data.datasets[0].data.shift();
+          }
+    
+          chart.update(); // Force chart to re-render
+        }
+    
+        // Example Firebase updates (replace with actual Firebase logic)
+        temperatureRef.on('value', snapshot => {
+          const temp = snapshot.val();
+          if (temp !== null) {
+            console.log("Received temperature:", temp);
+            const timestamp = new Date().toLocaleTimeString();
+            updateChart(temperatureChart, timestamp, temp);
+          }
+        });
+    
+        humidityRef.on('value', snapshot => {
+          const humidity = snapshot.val();
+          if (humidity !== null) {
+            console.log("Received humidity:", humidity);
+            const timestamp = new Date().toLocaleTimeString();
+            updateChart(humidityChart, timestamp, humidity);
+          }
+        });
+    
+        moistureRef.on('value', snapshot => {
+          const moisture = snapshot.val();
+          if (moisture !== null) {
+            console.log("Received moisture:", moisture);
+            const timestamp = new Date().toLocaleTimeString();
+            updateChart(moistureChart, timestamp, moisture);
+          }
+          if (moisture < 20) {
+            document.getElementById('moistureAlert').style.display = 'block'; // Show alert box
+          } 
+        });
+      };
+      // Close the moisture alert box
+      function closeAlert() {
+        document.getElementById('moistureAlert').style.display = 'none';
+      }
+    
+     // Pump Control
+  let pumpStatus = false;
+
+  function togglePump() {
+    pumpStatus = !pumpStatus;
+    pumpRef.set(pumpStatus ? 'ON' : 'OFF');
+    document.getElementById('pumpButton').innerText = pumpStatus ? 'Turn Pump Off' : 'Turn Pump On';
+    document.getElementById('pumpButton').classList.toggle('on', pumpStatus);
+  }
+
+  pumpRef.on('value', snapshot => {
+    pumpStatus = snapshot.val() === 'ON';
+    document.getElementById('pumpButton').innerText = pumpStatus ? 'Turn Pump Off' : 'Turn Pump On';
+    document.getElementById('pumpButton').classList.toggle('on', pumpStatus);
+  });
+    
+      
+    </script>
+    
+  
+    
+    
+    {% endblock %}
+    

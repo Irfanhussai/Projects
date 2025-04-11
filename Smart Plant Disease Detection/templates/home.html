@@ -1,0 +1,258 @@
+{% extends 'base.html' %}
+{% block pagetitle %}
+Plant Disease Detection
+{% endblock pagetitle %}
+
+{% block body %}
+<style>
+  /* .bg {
+    background-image: url("static/uploads/images/image.png"); 
+    height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }  */
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* About section styling */
+  .about-section {
+    padding: 50px;
+    background-color: #f7f7f7;
+    color: #333;
+    display: none; /* Initially hidden */
+    margin-top: 50px;
+  }
+
+  .about-header {
+    font-weight: 400;
+    color: rgb(4, 54, 4);
+  }
+
+  .about-content {
+    font-weight: 500;
+    color: black;
+  }
+
+  /* Ensure responsive design */
+  @media only screen and (max-width: 830px) {
+    .laptop {
+      display: none;
+    }
+  }
+
+  @media (min-width: 830px) and (max-width: 1536px) {
+    .mobile {
+      display: none;
+    }
+  }
+
+
+
+/* Animated start */
+
+  /* Container Styling */
+  .container {
+    text-align: center;
+    padding: 50px;
+    font-family: 'Arial', sans-serif;
+    /* background: #f9f9f9; */
+
+    overflow: hidden;
+    margin-top: 50px;
+  }
+ 
+
+  /* Headline Styling */
+  .headline {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #4caf50;
+    position: relative;
+    animation: fadeInScale 2s ease-out;
+  }
+
+  
+  /* Leaf Animation */
+  .leaf {
+    display: inline-block;
+    animation: bounce 2s infinite ease-in-out;
+  }
+
+  /* Subheadline Styling */
+  .subheadline {
+    font-size: 1.2em;
+    color: #555;
+    margin-top: 20px;
+    animation: slideIn 3s ease-out;
+  }
+
+  /* Animated Text Styling */
+  .animated-text {
+    display: inline-block;
+    background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: colorShift 4s linear infinite;
+    background-size: 400%;
+  }
+
+  /* Fade In and Scale Animation */
+  @keyframes fadeInScale {
+    0% {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /* Bounce Animation for Leaf */
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  /* Slide In Animation for Subheadline */
+  @keyframes slideIn {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Color Shift Animation */
+  @keyframes colorShift {
+    0% {
+      background-position: 0%;
+    }
+    100% {
+      background-position: 100%;
+    }
+  }
+
+
+/* Animated Close */
+
+</style>
+
+<div class="bg">
+  <!-- <div class="row mb-5 text-center text-white laptop">
+    <div class="col-lg-10 mx-auto">
+      <h1 class="display-4" style="padding-top: 2%; font-weight: 400; color: white;">
+        <b>🍁Plant Disease Detection And Monitoring System🍁</b>
+      </h1>
+      <p class="lead" style="font-weight: 500; color: white;">
+        This AI Engine Will Help To Detect Disease From Various Fruits and Veggies
+      </p>
+    </div>
+  </div> -->
+<!--  -->
+
+<!-- <div class="container">
+  <h1 class="headline">
+    <span class="leaf">🍁</span> 
+    Plant Disease Detection And Monitoring System 
+    <span class="leaf">🍁</span>
+  </h1>
+  <p class="subheadline">
+    This AI Engine Will Help To Detect Disease From Various Fruits and Veggies
+  </p>
+</div> -->
+
+<!--  -->
+<div class="container">
+  <h1 class="headline">
+    <span class="leaf">🍁</span> 
+    <span class="animated-text">Plant Disease Detection And Field Monitoring System</span>
+    <span class="leaf">🍁</span>
+  </h1>
+  <p class="subheadline">
+    <span class="animated-text">This AI Engine Will Help To Detect Disease From Various Fruits and Veggies</span>
+  </p>
+</div>
+
+
+
+  <!--  -->
+  <center class="laptop">
+    <a href="/login">
+      <button class="bttn-pill bttn-lg btn-success"><b style="color: black;">Login</b></button>
+    </a>
+  </center>
+</div>
+
+<!-- About Section, Initially Hidden -->
+<div id="about" class="about-section">
+  <div class="container">
+    <div class="row mb-5 text-center">
+      <div class="col-lg-10 mx-auto">
+        <h1 class="display-4 about-header"><b>🍀ABOUT 🍀</b></h1>
+        <p class="lead about-content">
+          Let AI Engine Will Help You To Detect Disease in Plants and Improve Plant Health
+        </p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mx-auto mb-4">
+        <div class="p-5 bg-white shadow rounded-lg">
+          <h4><b class="text-primary">Why is it necessary to detect disease in plant ?</b></h4>
+          <p class="text-justify">Since plant diseases can have a major effect on the development and production of the afflicted species, their detection is essential. Effective care requires early identification, even before outward symptoms manifest. This emphasizes how important it is to fill up research gaps in order to increase illness identification's accuracy and transparency. A plant pathologist's profession mostly involves diagnosis as it's critical to accurately identify the illness and its causative agent. Ineffective control methods might aggravate plant losses and waste time and money if they are not properly diagnosed. Consequently, fast and precise disease identification is essential to effective plant health management.
+          </p>
+        </div>
+      </div>
+
+      <div class="col-md-6 mx-auto mb-4">
+        <div class="p-5 bg-white shadow rounded-lg text-center">
+          <img src="static/uploads/images/detection_1.jpg" class="img-fluid rounded" alt="Plant Disease Detection Image" />
+        </div>
+      </div>
+
+      <div class="col mx-auto">
+        <div class="p-5 bg-white shadow rounded-lg" style="height: 95%;">
+            <h5><b class="text-danger">Prevent Plant Disease follow below steps:</b></h5>
+            <ol class="col-md-12 text-start">
+                <li>Implement Field Sanitation.</li>
+                <li>Practice Crop Rotation.</li>
+                <li>Inspect Plants for Diseases Before You Bring Them Home.</li>
+                <li>Use Resistant Crop Varietie.</li>
+                <li>Monitor Soil Health.</li>
+                <li>Apply Biological Controls.</li>
+                <li>Provide Good Air Circulation</li>
+                <li>Remove Diseased Stems and Foliage</li>
+                <li>Inspect crops for early signs of disease, pests, or nutrient deficiencies to implement corrective measures quickly.</li>
+            </ol>
+            <a target="_blank" href="https://extension.psu.edu/start-farming-developing-your-disease-management-plan"
+                class="mx-2"><button type="button" class="btn btn-outline-success">More info</button></a>
+        </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// When the user scrolls down, show the About section
+window.onscroll = function() {
+  var aboutSection = document.getElementById('about');
+  if (window.scrollY > 200) { // 200px from top to trigger visibility
+    aboutSection.style.display = 'block'; // Show the About section
+  }
+};
+</script>
+
+
+{% endblock body %}

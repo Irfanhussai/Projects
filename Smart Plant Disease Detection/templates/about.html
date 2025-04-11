@@ -1,0 +1,70 @@
+<html>
+{% extends 'base.html' %}
+{% block pagetitle %}
+AI Engine
+{% endblock pagetitle %}
+
+{% block body %}
+<div>
+    <div class="container">
+        <!-- For demo purpose -->
+        <div class="row mb-5 text-center text-white">
+            <div class="col-lg-10 mx-auto">
+                <h1 class="display-4" style="padding-top: 2%;font-weight: 400;color: rgb(4, 54, 4);"><b>🍀ABOUT 🍀</b></h1>
+                <p class="lead" style="font-weight: 500;color: black;"></p>
+            </div>
+        </div>
+        <!-- End -->
+        <div class="row ">
+            <div class="col mx-auto">
+                <div class="p-5 bg-white shadow rounded-lg" style="height: 95%;">
+
+                    <h4><b class="text-primary">Why is it necessary to detect disease in plant ?</b></h4>
+                        <p class="text-justify">Since plant diseases can have a major effect on the development and production of the afflicted species, their detection is essential. Effective care requires early identification, even before outward symptoms manifest. This emphasizes how important it is to fill up research gaps in order to increase illness identification's accuracy and transparency. A plant pathologist's profession mostly involves diagnosis as it's critical to accurately identify the illness and its causative agent. Ineffective control methods might aggravate plant losses and waste time and money if they are not properly diagnosed. Consequently, fast and precise disease identification is essential to effective plant health management.
+                        </p>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col mx-auto">
+                    <div class="p-5 bg-white shadow rounded-lg" style="height: 90%;">
+                        <center>
+                        <img src="static/uploads/images/detection_1.jpg" height="90%" width="95%" alt="Plant Disease Detection Image" />
+                        </center>
+                    </div>
+                </div>
+            </div>
+            <div class="col mx-auto">
+                <div class="p-5 bg-white shadow rounded-lg" style="height: 95%;">
+                    <h5><b class="text-danger">Prevent Plant Disease follow below steps:</b></h5>
+                    <ol class="text-justify">
+                        <li>Implement Field Sanitation.</li>
+                        <li>Practice Crop Rotation.</li>
+                        <li>Inspect Plants for Diseases Before You Bring Them Home.</li>
+                        <li>Use Resistant Crop Varietie.</li>
+                        <li>Monitor Soil Health.</li>
+                        <li>Apply Biological Controls.</li>
+                        <li>Provide Good Air Circulation</li>
+                        <li>Remove Diseased Stems and Foliage</li>
+                        <li>Inspect crops for early signs of disease, pests, or nutrient deficiencies to implement corrective measures quickly.</li>
+                    </ol>
+                    <a target="_blank" href="https://extension.psu.edu/start-farming-developing-your-disease-management-plan"
+                        class="mx-2"><button type="button" class="btn btn-outline-success">More info</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const actualBtn = document.getElementById('actual-btn');
+
+    const fileChosen = document.getElementById('file-chosen');
+
+    actualBtn.addEventListener('change', function () {
+        fileChosen.textContent = this.files[0].name
+    })
+</script>
+
+{% endblock body %}

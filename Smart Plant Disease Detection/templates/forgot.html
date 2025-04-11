@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block pagetitle %}
+Login
+{% endblock pagetitle %}
+
+{% block body %}
+<style>
+  body {
+    overflow-x: hidden;
+    background-color: #f8f9fa;
+  }
+  .login-container {
+    max-width: 400px;
+    margin: auto;
+    margin-top: 100px;
+    margin-bottom: 250px;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  .login-btn {
+    width: 100%;
+  }
+
+</style>
+
+<div class="container">
+  <div class="login-container">
+    <h2 class="text-center" style="font-weight: 400; color: #045403;">Forgot_Password</h2>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+       
+         <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+       <form method="POST">
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Send Reset Link</button>
+        </form>
+ 
+    <p class="text-center mt-3">
+      Don't have an account? <a href="/register">Register here</a>
+    </p>
+  </div>
+</div>
+
+{% endblock body %}
